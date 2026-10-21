@@ -1,0 +1,78 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<odoo>
+
+        <!-- Tree View for property.offers -->
+    <record id="property_offers_view_tree" model="ir.ui.view">
+        <field name="name">property.offers tree</field>
+        <field name="model">property.offers</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="validity" />
+                <field name="price" />
+                 <field name="property_id" />
+                <field name="partner_id" />
+            </tree>
+        </field>
+    </record>
+
+
+                <record id="property_offers_view_form" model="ir.ui.view">
+        <field name="name">property.offers form</field>
+        <field name="model">property.offers</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="validity" />
+                        <field name="price" />
+                    </group>
+                    <group>
+                        <field name="property_id" />
+                        <field name="partner_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+   <!-- Action for property.offers -->
+    <record id="property_offers_action" model="ir.actions.act_window">
+        <field name="name">Property Offers</field>
+        <field name="res_model">property.offers</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+     <!-- Menu Item for property.offers -->
+
+
+    <menuitem id="property_offers_menu_item"
+              name="Offers"
+              parent="configration_menu"
+              action="property_offers_action"
+    />
+</odoo>
+
+
+
+
+
+
+
+
+
+
+

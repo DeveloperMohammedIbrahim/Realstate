@@ -1,0 +1,26 @@
+<odoo>
+    <!-- Inherit and modify the Sale Order Form View -->
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">Sale Order Form View</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="property_id"/>
+<!--                <field name="Discount"/>-->
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherit and modify the Sale Order Tree View -->
+    <record id="view_order_tree_inherit" model="ir.ui.view">
+        <field name="name">Sale Order Tree View</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="property_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

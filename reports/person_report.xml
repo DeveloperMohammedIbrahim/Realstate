@@ -1,0 +1,134 @@
+<odoo>
+    <data>
+        <record id="person_report" model="ir.actions.report">
+            <field name="name">Person Reports</field>
+            <field name="model">person</field>
+            <field name="report_type">qweb-html</field>
+            <field name="binding_model_id" ref="app_one.model_person"/>
+            <field name="binding_type">report</field>
+            <field name="report_name">app_one.person_report_template</field>
+        </record>
+
+        <template id="person_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                                <t t-call="app_one.call_template"/>
+
+                    <t t-set="a" t-value="1215646465"/>
+                    <h1 t-esc="a"/>
+                    <t t-foreach="[1,2,3,4,5,6,7,8,9,10,11]" t-as="n">
+                        <h6 t-esc="n"/>
+                    </t>
+                    <style>
+                        .person-report-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                        font-family: Arial, sans-serif;
+                        }
+                        .person-report-table th, .person-report-table td {
+                        border: 1px solid #dddddd;
+                        text-align: left;
+                        padding: 10px;
+                        }
+                        .person-report-table th {
+                        background-color: #f2f2f2;
+                        color: #333;
+                        }
+                        .person-report-header {
+                        text-align: center;
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+
+                        }
+                    </style>
+
+                    <h1 class="person-report-header">Person Report Info</h1>
+
+                    <table class="person-report-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">General Info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Name</td>
+                                <td>
+                                    <t t-esc="o.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>birth date</td>
+                                <td>
+                                    <t t-esc="o.birth_date"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="person-report-table">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Additional Info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>spouse name</td>
+                                <td>
+                                    <span t-field="o.spouse_name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>spouse_birth_date</td>
+                                <td>
+                                    <t t-esc="o.spouse_birth_date"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <t t-if="o.is_married != False ">
+                        <h1 t-esc="a"/>
+                        <table class="person-report-table">
+                            <thead>
+                                <tr>
+                                    <th>id child </th>
+                                    <th>child name</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.child_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line_index +1"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.name"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.age"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+
+                    <h1 t-elif="o.name=='xsls'">xsls</h1>
+
+                    <t t-else="">
+                        <h1>not is_married</h1>
+                    </t>
+                </t>
+            </t>
+        </template>
+        <template id="call_template">
+            <t t-call="web.html_container">
+                how to create call template
+            </t>
+        </template>
+    </data>
+</odoo>

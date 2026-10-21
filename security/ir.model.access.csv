@@ -1,0 +1,26 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_property,access_property,model_property,,1,1,1,1
+access_owner,access_owner,model_owner,,1,1,1,1
+access_client,access_client,model_client,,1,1,1,1
+access_tag,access_tag,model_tag,,1,1,1,1
+access_property_line,access_property_line,model_property_line,,1,1,1,1
+access_property_offers,access_property_offers,model_property_offers,,1,1,1,1
+access_res_partner,access_res_partner ,model_res_partner,,1,1,1,1
+access_res_country,access_res_country ,model_res_country,,1,1,1,1
+access_building,access_building ,model_building,,1,1,1,1
+access_property_history,access_property_history,model_property_history,,1,1,1,1
+access_change_state,access_change_state,model_change_state,,1,1,1,1
+access_sale_order_report_wizard,access_sale_order_report_wizard,model_sale_order_report_wizard,,1,1,1,1
+access_property_history_line,access_property_history_line,model_property_history_line,,1,1,1,1
+access_sale_order_line,access_sale_order_line,model_sale_order_line,,1,1,1,1
+access_sale_order,access_sale_order,model_sale_order,,1,1,1,1
+access_sale_report,access_sale_report,model_sale_report,,1,1,1,1
+access_sale_advance_payment_inv,access_sale_advance_payment_inv,model_sale_advance_payment_inv,,1,1,1,1
+access_person,access_person,model_person,,1,1,1,1
+access_person_line,access_person_line,model_person_line,,1,1,1,1
+access_related_person,access_related_person,model_related_person,,1,1,1,1
+access_gift,access_gift,model_gift,,1,1,1,1
+access_birthday,access_birthday,model_birthday,,1,1,1,1
+access_birthday,access_birthday,model_birthday,,1,1,1,1
+access_ir_module_module,access_ir_module_module,model_ir_module_module,,1,1,1,1
+access_res_partner_wizard,access_res_partner_wizard,model_res_partner_wizard,,1,1,1,1

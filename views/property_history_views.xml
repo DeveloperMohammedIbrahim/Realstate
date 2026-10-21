@@ -1,0 +1,61 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="property_history_view_tree" model="ir.ui.view">
+        <field name="name">property history tree</field>
+        <field name="model">property.history</field><!-- field بيكون مربوط بالمودل والاسم بجيبه منه بالظبط -->
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" delete="0">
+                <field name="property_id"/>
+                <field name="user_id"/>
+                <field name="old_state"/>
+                <field name='new_state'/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="property_history_view_form" model="ir.ui.view">
+        <field name="name">property history form</field>
+        <field name="model">property.history</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="property_id"/>
+                        </group>
+                        <group>
+                            <field name='old_state' />
+                            <field name='new_state'/>
+                            <field name='reason'/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Bedrooms">
+                            <field name="line_ids" readonly="1" >
+                                <tree>
+                                    <field name="description"/>
+                                    <field name="area"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="property_history_action" model="ir.actions.act_window">
+        <field name="name">Property History</field>
+        <field name="res_model">property.history</field>
+
+    </record>
+    <!-- Menu Item -->
+    <menuitem id="property_history_menu_item"
+              name="Properties History"
+              parent="properties_menu"
+              action="property_history_action"/>
+</odoo>

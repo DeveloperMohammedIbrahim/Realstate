@@ -1,0 +1,45 @@
+<odoo>
+    <!-- نموذج العرض للفورم -->
+    <record id="view_birthday_form" model="ir.ui.view">
+        <field name="name">birthday.form</field>
+        <field name="model">birthday</field>
+        <field name="arch" type="xml">
+            <form string="Birthday">
+                <sheet>
+                    <group>
+                        <field name="son" readonly="1"/>
+                    <field name="father" readonly="1"/>
+                    <field name="birthday" readonly="1"/>
+                    <field name="gift_id"/>
+                    <field name="gift_price" readonly="1"/>>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+<!-- Tree View -->
+    <record id="view_birthday_tree" model="ir.ui.view">
+        <field name="name">birthday.tree</field>
+        <field name="model">birthday</field>
+        <field name="arch" type="xml">
+            <tree string="Birthday">
+                <field name="son" readonly="1"/>
+                <field name="father" readonly="1"/>
+                <field name="birthday" readonly="1"/>
+                <field name="gift_id"/>
+                <field name="gift_price" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- إجراء لفتح نموذج عيد الميلاد -->
+    <record id="action_birthday" model="ir.actions.act_window">
+        <field name="name">Birthdays</field>
+        <field name="res_model">birthday</field>
+    </record>
+    <!-- قائمة عيد الميلاد -->
+
+    <menuitem id="menu_birthday_management" name=" Birthdays" parent="Family_menu"
+ action="action_birthday"/>
+</odoo>

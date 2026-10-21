@@ -1,0 +1,72 @@
+
+<odoo>
+    <!-- Tree View -->
+    <record id="building_view_tree" model="ir.ui.view">
+        <field name="name">building tree</field>
+        <field name="model">building</field><!-- field بيكون مربوط بالمودل والاسم بجيبه منه بالظبط -->
+        <field name="arch" type="xml">
+            <tree class="header_custom">
+
+                <field name="no" />
+                <field name="active" />
+                <field name="code" />
+                <field name="description" />
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="building_view_form" model="ir.ui.view">
+        <field name="name">building form</field>
+        <field name="model">building</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="General Info">
+                               <field name="no" />
+                        </group>
+                        <group string="Additional Info">
+                            <field name="code" />
+                           <field name="description" />
+
+                        </group>
+
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                                    <field name="active" />
+
+
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Search View -->
+    <record id="building_view_search" model="ir.ui.view">
+        <field name="name">building search</field>
+        <field name="model">building</field>
+        <field name="arch" type="xml">
+            <search>
+                  <field name="no" />
+                <field name="code" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="building_action" model="ir.actions.act_window">
+        <field name="name">building</field>
+        <field name="res_model">building</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="building_menu_item" name="Buildings" parent="properties_menu" action="building_action" />
+</odoo>

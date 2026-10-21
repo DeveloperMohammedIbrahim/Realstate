@@ -1,0 +1,20 @@
+<odoo>
+    <!-- This Menu Item must have a parent and an action -->
+<!--    يستخدم لإنشاء عناصر قائمة في تطبيق Odoo.
+ يحدد هذا الكود هيكل القائمة الخاصة بوحدة "RealEstate"
+ ويضيف عنصرين للقائمة: "RealEstate"
+ كعنصر جذر (Root Menu) و"Properties" كعنصر فرعي (Sub Menu) تحت "RealEstate".-->
+    <menuitem id="real_estate_root_menu" name="RealEstate"
+    web_icon="app_one,static/description/icon.png"
+    />
+<!-- الاسم الذي يظهر للمستخدم -->
+    <menuitem id="properties_menu"
+              name="Properties"
+              parent="real_estate_root_menu"
+    /><!--Properties بيظهر في المنيو الي بالعرض-->
+
+<menuitem id="configration_menu"
+              name="Configration"
+              parent="real_estate_root_menu"
+              groups="property_manager_group"/>
+</odoo>

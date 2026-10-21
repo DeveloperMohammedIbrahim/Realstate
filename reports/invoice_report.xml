@@ -1,0 +1,469 @@
+<odoo>
+    <!-- القالب الأساسي -->
+    <template id="report_hello_template">
+        <t t-call="web.html_container">
+            <t t-call='web.external_layout'>
+                <t t-foreach='docs' t-as="o">
+                    <div style="width: 80%; margin-right: 20%; text-align: right;">
+                        <address t-field="o.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        <div t-if="o.partner_id.vat">
+                            <t t-if="o.company_id.account_fiscal_country_id.vat_label"
+                               t-out="o.company_id.account_fiscal_country_id.vat_label"/>
+                            <t t-else="">Tax ID</t>:
+                            <span t-field="o.partner_id.vat"/>
+                        </div>
+                    </div>
+
+
+                    <!-- جدول العنوان وتفاصيل التسليم -->
+                    <table style="width: 50%; margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th colspan='2'
+                                    style="text-align: left; padding: 10px; border: none; font-size: 400%; font-weight: bold;">
+                                    Draft Invoice
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- الصف الأول: القيم الثابتة -->
+                            <tr>
+                                <td style="padding: 10px; border: none; font-weight: bold;">Delivery Date:</td>
+                                <td style="padding: 10px; border: none; font-weight: bold;">Source:</td>
+                            </tr>
+                            <!-- الصف الثاني: القيم المتغيرة -->
+                            <tr>
+                                <td style="padding: 10px; border: none;">
+                                    <t t-esc="o.delivery_date"/>
+                                </td>
+                                <td style="padding: 10px; border: none;">
+                                    <t t-esc="o.invoice_origin"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- جدول البيانات بدون خطوط -->
+                    <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 10px; border: none; text-align: left;">Description</th>
+                                <th style="padding: 10px; border: none; text-align: right;">Quantity</th>
+                                <th style="padding: 10px; border: none; text-align: right;">Unit Price</th>
+                                <th style="padding: 10px; border: none; text-align: right;">Taxes</th>
+                                <th style="padding: 10px; border: none; text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <tr>
+                                    <td style="padding: 10px; border: none; width: 50%;">
+                                        <t t-esc="line.name"/>
+                                    </td>
+                                    <td style="padding: 10px; border: none; text-align: right;">
+                                        <t t-if="line.quantity != 0">
+                                            <t t-esc="line.quantity"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding: 10px; border: none; text-align: right;">
+                                        <t t-if="line.quantity != 0">
+                                            <span t-field="line.price_unit"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding: 10px; border: none; text-align: right;">
+                                        <t t-if="line.quantity != 0">
+                                            <t t-esc="', '.join([tax.name for tax in line.tax_ids])"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding: 10px; border: none; text-align: right;">
+                                        <t t-if="line.quantity != 0">
+                                            <t t-esc="'$ ' + '{:.2f}'.format(line.price_subtotal)"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%; margin-top: 20px;">
+                        <tr>
+                            <!-- الخلية الفارغة التي تشغل 52% من عرض الصفحة -->
+
+
+                            <!-- الخلية التي تحتوي على Payment terms -->
+                            <td style="padding: 10 20px; border: none; text-align: lift;">
+                                <strong>Payment terms:
+                                    <span t-field="o.invoice_payment_term_id"/>
+                                </strong>
+                            </td>
+
+                            <td style="width: 10%;"></td>
+                            <!-- الخلية التي تحتوي على الخط الفاصل و Untaxed amount و Tax -->
+                            <td style="width: 50%; text-align: right;">
+                                <div style="width: 100%; border-top: 1px solid black; padding-top: 5px;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="padding: 0 10px; border: none; font-weight: bold; text-align: left;">
+                                                Untaxed amount
+                                            </td>
+                                            <td style="padding: 0 10px; border: none; text-align: right;">
+                                                <span t-field="o.amount_untaxed"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 0 10px; border: none; font-weight: bold; text-align: left;">
+                                                <strong>Tax</strong>
+                                            </td>
+                                            <td style="padding: 0 10px; border: none; text-align: right;">
+                                                <span t-field="o.amount_tax"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <!-- جدول المجموع -->
+                    <table style="width: 100%; margin-top: 20px;">
+                        <tr>
+                            <!-- الخلية الفارغة التي تشغل 50% من عرض الصفحة -->
+                            <td style="width: 50%;"></td>
+
+                            <!-- الخلية التي تحتوي على الخط الفاصل وTotal -->
+                            <td style="width: 50%; text-align: right;">
+                                <div style="width: 100%; border-top: 1px solid black; padding-top: 5px;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="padding: 0 10px; border: none; font-weight: bold; text-align: left;">
+                                                Total
+                                            </td>
+                                            <td style="padding: 0 10px; border: none; text-align: right;">
+                                                <span t-field="o.amount_residual"/>
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+    <!-- تعريف التقرير -->
+    <record id="action_report_invoice_xlsx" model="ir.actions.report">
+        <field name="name">Invoice XLSX Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">app_one.report_invoice_xlsx</field>
+        <field name="report_file">app_one.report_invoice_xlsx</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="attachment_use" eval="False"/>
+        <field name="multi" eval="True"/>
+    </record>
+<!--    field name="orientation">Portrait</field>-->
+<!--    field name="orientation">Landscape</field>-->
+    <record id="paperformat_custom" model="report.paperformat">
+        <field name="name">Custom Paper Format</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_spacing">10</field>
+    </record>
+
+    <template id="tax_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach='docs' t-as="o">
+
+                <strong style="font-size: xx-large; text-align: center; display: block;">TAX INVOICE</strong>
+
+                <table style="width: 42cm; border-collapse: collapse; border-left: 2px solid #000; border-right: 2px solid #000;  border-top: 2px solid #000; border-bottom: 2px solid #000;">
+                    <tr style="display: none;">
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                        <td style="width: 2.5%;"></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="12"
+                            style="width: 50%; padding: 8px; font-weight: bold; font-size: x-large; text-align: center; border-right: 2px solid #000; border-bottom: 2px solid #000; ">
+                            Customer Details:
+                        </td>
+                        <td colspan="16"
+                            style="width: 50%; padding: 8px; font-weight: bold; font-size: x-large; text-align: center; border-right: 2px solid #000; border-bottom: 2px solid #000; ">
+                            Supplier Details:
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="4"></td>
+                        <td colspan="8"></td>
+                        <td colspan="8"
+                            style="padding:  8px; text-align: left; border-right: 0px solid #000;border-left: 2px solid #000;">
+                            Page:
+                        </td>
+                        <td style=" text-align: center; " colspan="8">1 of 1</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td colspan="8"></td>
+                        <td colspan="8"
+                            style="padding:  8px; text-align: left; border-right: 0px solid #000; border-left: 2px solid #000;">
+                            Invoice No:
+                        </td>
+                        <td style=" text-align: center; " colspan="8">NST/16842024</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td colspan="8"></td>
+                        <td colspan="8"
+                            style="padding:  8px; text-align: left; border-right: 0px solid #000;border-left: 2px solid #000;">
+                            Date:
+                        </td>
+                        <td style=" text-align: center; " colspan="8">31-Jul-24</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td colspan="8"></td>
+                        <td colspan="8"
+                            style="padding:  8px; text-align: left; border-right: 0px solid #000;border-left: 2px solid #000;">
+                            Purchase Order No:
+                        </td>
+                        <td style=" text-align: center; " colspan="8">PCT-4 (RAVI)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td colspan="8"></td>
+                        <td colspan="8"
+                            style="padding:  8px; text-align: left; border-right: 0px solid #000;border-left: 2px solid #000;">
+                            Job Location
+                        </td>
+                        <td style=" text-align: center; " colspan="8">OPEN ORDER</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td colspan="8"></td>
+                        <td colspan="8"
+                            style="padding:  8px; text-align: left; border-right: 0px solid #000;border-left: 2px solid #000;">
+                            VAT NO
+                        </td>
+                        <td style=" text-align: center; " colspan="8">100060819400003</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="2">S/NO</td>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="8">Job
+                            Description
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="2">Quantity</td>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="3">Rate per
+                            Month/Hour
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="5">Total Before
+                            VAT Amount
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="4">VAT Amount
+                            5%
+                        </td>
+                        <td style="padding: 10px; border: 1px solid #000; text-align: center;" colspan="4">Total Invoice
+                            Amount
+                        </td>
+                    </tr>
+                    <t t-set="counter" t-value="1"/>
+                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                        <tr>
+                            <td colspan="2"
+                                style="padding: 10px; border: 1px solid #000; text-align: center;">
+                                <t t-esc="counter"/>
+                                <t t-set="counter" t-value="counter + 1"/>
+                            </td>
+                            <td colspan="8" style="padding: 10px; border: 1px solid #000; text-align: center; ">
+                                <t t-esc="line.name"/>
+                            </td>
+                            <td colspan="2" style="padding: 10px; border: 1px solid #000; text-align: center;">
+                                <t t-if="line.quantity != 0">
+                                    <t t-esc="line.quantity"/>
+                                </t>
+                            </td>
+                            <td colspan="3" style="padding: 10px; border: 1px solid #000; text-align: center;">
+                                <t t-if="line.quantity != 0">
+                                    <span t-field="line.price_unit"/>
+                                </t>
+                            </td>
+                            <td colspan="5"
+                                style="padding: 10px; border: 1px solid #000; text-align: center; width: 15%;">
+                                <t t-if="line.quantity != 0">
+                                    <span t-field="line.price_subtotal"/>
+                                </t>
+                            </td>
+                            <td colspan="4" style="padding: 10px; border: 1px solid #000; text-align: center;">
+                                <t t-if="line.quantity != 0">
+                                    <span t-field="line.vat_amount"/>
+                                </t>
+                            </td>
+                            <td colspan="4" style="padding: 10px; border: 1px solid #000; text-align: center;">
+                                <t t-if="line.quantity != 0">
+                                    <t t-esc="line.price_total"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                    <tr style=" border-collapse: collapse; border-left: 2px solid #000; border-right: 2px solid #000; border-bottom: 2px solid #000;">
+                        <td colspan="12"></td>
+                        <td colspan="8"
+                            style="padding: 11px  0px 0px 109px;font-weight: bold;text-align: left;  border-left: 2px solid #000; border-right: 2px solid #000;">
+                            Total Before VAT:
+                        </td>
+
+                        <td colspan="8" style="padding: 16px 0px 0px 122px;text-align: left;border-bottom: 2px solid;">
+                            <t t-esc="o.amount_untaxed"/>
+                        </td>
+
+
+                    </tr>
+                    <tr style=" border-collapse: collapse; border-left: 2px solid #000; border-right: 2px solid #000; border-bottom: 2px solid #000;">
+                        <td colspan="12"></td>
+                        <td colspan="8"
+                            style="padding: 11px  0px 0px 100px;font-weight: bold;text-align: left;  border-left: 2px solid #000;border-right: 2px solid #000;">
+                            VAT Amount (5%)
+                        </td>
+                        <td colspan="8" style="padding: 16px 0px 0px 122px;text-align: left;border-bottom: 2px solid;">
+                            <t t-esc="o.amount_tax"/>
+                        </td>
+
+                    </tr>
+                    <tr style=" border-collapse: collapse; border-left: 2px solid #000;  border-right: 2px solid #000; border-left: 2px solid #000; border-bottom: 2px solid #000;">
+                        <td colspan="12"></td>
+                        <td colspan="8"
+                            style="padding: 11px  0px 0px 140px;font-weight: bold;text-align: left;border-right: 2px solid #000;  border-left: 2px solid #000;">
+                            Grand Total:
+                        </td>
+
+                        <td colspan="8" style="padding: 16px 0px 0px 122px;text-align: left;border-bottom: 2px solid;">
+                            <t t-esc="o.amount_residual"/>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan="28" style="      height: 50px;
+ padding: 8px;font-weight: bold;border-top: 2px solid #000;text-align: center;background-color: wheat;">Amount In Words:
+                            <t t-esc="o.price_total_words"/>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="28"
+                            style="padding: 52px 0px 0px 4px;font-weight: bold;text-align: left;border-top: 2px solid #000;height: 90px;">
+                            Note:Rate per one month 5,800.00(260.00Hours/5,800.00-22.30/Hour)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="6" style=" text-align: center; border: 1px solid black; padding: 10px;">Prepared By
+                            :
+                        </td>
+                        <td colspan="12" style=" text-align: center; border: 1px solid black; padding: 10px;">Accounts
+                            :
+                        </td>
+                        <td colspan="10" style=" text-align: center; border: 1px solid black; padding: 10px;">Received
+                            By :
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" style="height: 50px; border: 1px solid black;"></td>
+                        <td colspan="12" style="height: 50px; border: 1px solid black;"></td>
+                        <td colspan="10" style="height: 50px; border: 1px solid black;"></td>
+                    </tr>
+
+                </table>
+                <div style="width: 80%; margin-right: 20%; text-align: right;">
+                    <address t-field="o.partner_id"
+                             t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                    <div t-if="o.partner_id.vat">
+                        <t t-if="o.company_id.account_fiscal_country_id.vat_label"
+                           t-out="o.company_id.account_fiscal_country_id.vat_label"/>
+                        <t t-else="">Tax ID</t>:
+                        <span t-field="o.partner_id.vat"/>
+                    </div>
+                </div>
+                <tr>
+                    <td style="padding: 10px; border: none; font-weight: bold;">Delivery Date:</td>
+                    <td style="padding: 10px; border: none; font-weight: bold;">Source:</td>
+                </tr>
+                <!-- الصف الثاني: القيم المتغيرة -->
+                <tr>
+                    <td style="padding: 10px; border: none;">
+                        <t t-esc="o.delivery_date"/>
+                    </td>
+                    <td style="padding: 10px; border: none;">
+                        <t t-esc="o.invoice_origin"/>
+                    </td>
+                </tr>
+
+
+            </t>
+        </t>
+        <!--        </t>-->
+    </template>
+
+    <!--.report_saleorder_document-->
+
+    <record id="action_report_hello" model="ir.actions.report">
+        <field name="name">Hello Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-html</field>
+
+        <field name="report_name">app_one.report_hello_template</field>
+        <field name="report_file">app_one.report_hello_template</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_tax_invoice" model="ir.actions.report">
+        <field name="name">Tax Invoice</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">app_one.tax_invoice</field>
+        <field name="report_file">app_one.tax_invoice</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_custom"/> <!-- ربط الـ paperformat -->
+    </record>
+
+</odoo>
+

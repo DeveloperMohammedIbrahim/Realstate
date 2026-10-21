@@ -1,0 +1,86 @@
+<odoo>
+   <record id="sale_order_confirm_actions_server_action" model="ir.actions.server">
+    <field name="name">Confirm actions</field>
+    <field name="model_id" ref="sale.model_sale_order"/>
+    <field name="binding_model_id" ref="sale.model_sale_order"/>
+    <field name="state">code</field>
+    <field name="code">action = records.action_confirm()</field>
+</record>
+
+    <!-- تعديل عرض الشجرة في Sale Order -->
+<!--    <record id="action_report_sale_order_xlsx_button" model="ir.ui.view">-->
+<!--        <field name="name">sale.order.tree.button</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//header" position="inside">-->
+<!--                <button name="%(action_report_sale_order_xlsx_server)d"-->
+<!--                        string="Generate XLSX Report"-->
+<!--                        type="action"-->
+<!--                        class="btn-primary"-->
+<!--                        icon="fa-file-excel-o"/>-->
+<!--                 &lt;!&ndash; إضافة زر action_confirm &ndash;&gt;-->
+<!--            <button name="action_confirm"-->
+<!--                    string="Confirm actions"-->
+<!--                    type="object"-->
+<!--                    class="btn-primary"-->
+<!--                    icon="fa-check"/>-->
+<!--            </xpath>-->
+<!--            <field name="partner_id" position="after">-->
+<!--                <field name="property_id"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!-- Inherit and modify the Sale Order Form View -->
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <header>
+                <button name="%(action_report_sale_order_xlsx_server)d" string="Generate XLSX Report" type="action"
+                        class="btn-primary"/>
+            </header>
+            <!-- تعديل التبويب Order Lines -->
+            <xpath expr="//page[@name='order_lines']//tree/field[@name='qty_delivered']" position="after">
+                <field name="undelivered"/>
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button name="action_print_hello" type="object" string="Print Hello Report" class="btn-primary"/>
+                <button name="exchange" string="Exchange" type="object"
+                        class="btn-primary"/>
+
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_inherit1" model="ir.ui.view">
+        <field name="name">sale.order.form.inherited1</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_policy']" position="after">
+                <field name="property_id"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <xpath expr="//field[@name='tag_ids']" position="move"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_report_hello_saleorder" model="ir.actions.report">
+        <field name="name">Hello Report1</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">app_one.report_hello_template</field>
+        <field name="report_file">app_one.report_hello_template</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+
+
+        <!--        <field name="print_report_name">(object.state in ('draft', 'sent') and 'Quotation - %s' % (object.name)) or 'Order - %s' % (object.name)</field>-->
+
+    </record>
+</odoo>
+

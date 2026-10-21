@@ -1,0 +1,41 @@
+<odoo>
+    <record id="view_related_person_form" model="ir.ui.view">
+    <field name="name">related.person.form</field>
+    <field name="model">related.person</field>
+    <field name="arch" type="xml">
+        <form string="Related Person">
+            <sheet>
+                <div name="button_box" class="oe_button_box">
+                        <button name="action_open_related_person" type="object" icon="fa-user" string="Person" invisible="not name"/>
+                    </div>
+                <group>
+                    <field name="name"/>
+                    <field name="child_id"/>
+
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="view_related_person_tree" model="ir.ui.view">
+    <field name="name">related.person.tree</field>
+    <field name="model">related.person</field>
+    <field name="arch" type="xml">
+        <tree string="Related Person">
+            <field name="name"/>
+            <field name="child_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="action_related_person" model="ir.actions.act_window">
+    <field name="name">Related Persons</field>
+    <field name="res_model">related.person</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="menu_related_person" name="Daddy^s love" parent="Family_menu" action="action_related_person"/>
+
+
+</odoo>

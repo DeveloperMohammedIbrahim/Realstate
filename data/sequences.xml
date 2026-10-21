@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="property_sequences" model="ir.sequence">
+            <field name="name">Property Seq.</field>
+            <!--بنحتاج لما نعمل ثاني record -->
+            <field name="code">property_seq</field>
+            <field name="prefix">PRT</field>
+            <field name="padding">5</field>
+        </record>
+        <record id="person_sequences" model="ir.sequence">
+            <field name="name">Person Seq.</field>
+            <!--بنحتاج لما نعمل ثاني record -->
+            <field name="code">person_seq</field>
+            <field name="prefix">PRT</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+
+
+</odoo>

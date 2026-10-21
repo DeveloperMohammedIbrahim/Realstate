@@ -1,0 +1,44 @@
+<odoo>
+    <!-- نموذج العرض للفورم -->
+    <record id="view_gift_form" model="ir.ui.view">
+        <field name="name">gift.form</field>
+        <field name="model">gift</field>
+        <field name="arch" type="xml">
+            <form string="Gift">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="price"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- نموذج العرض للشجرة -->
+    <record id="view_gift_tree" model="ir.ui.view">
+        <field name="name">gift.tree</field>
+        <field name="model">gift</field>
+        <field name="arch" type="xml">
+            <tree string="Gifts">
+                <field name="name"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- إجراء لفتح نموذج الهدايا -->
+    <record id="action_gift" model="ir.actions.act_window">
+        <field name="name">Gifts</field>
+        <field name="res_model">gift</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- قائمة الهدايا -->
+
+
+    <menuitem  id="menu_gift"
+               name="Gifts" parent="Family_menu" action="action_gift"
+              />
+
+</odoo>

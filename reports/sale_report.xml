@@ -1,0 +1,66 @@
+<odoo>
+
+    <record id="action_report_sale_order_xlsx_server" model="ir.actions.server">
+        <field name="name">Sale Order XLSX Report</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+            <![CDATA[
+        action = {
+            'type': 'ir.actions.act_window',
+            'name': 'Sale Order XLSX Report Wizard',
+            'res_model': 'sale.order.report.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+        }
+        ]]>
+        </field>
+    </record>
+    <!-- تعريف تقرير XLSX -->
+
+    <record id="action_report_sale_order_xlsx" model="ir.actions.report">
+        <field name="name">Sale Order XLSX Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">app_one.report_sale_order_xlsx</field>
+        <field name="report_file">app_one.report_sale_order_xlsx</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="attachment_use" eval="False"/>
+    </record>
+
+    <record id="action_report_sale_order_xlsx1" model="ir.actions.report">
+        <field name="name">Sale Order XLSX Report1</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">app_one.report_sale_order_xlsx1</field>
+        <field name="report_file">app_one.report_sale_order_xlsx1</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="attachment_use" eval="False"/>
+    </record>
+
+    <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
+        <!-- تعديل العنوان الأساسي -->
+        <xpath expr="//span[@t-else]" position="replace">
+            <span t-else="">
+                Order from Mohamed
+            </span>
+        </xpath>
+
+        <!-- تعديل جدول سطور الطلب -->
+        <xpath expr="//th[@name='th_taxes']" position="before">
+            <th name="th_undelivered" class="text-end">
+                <span>Undelivered Qty</span>
+            </th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_taxes']" position="before">
+            <td name="td_undelivered" class="text-end">
+                <span t-field="line.undelivered"/>
+            </td>
+        </xpath>
+    </template>
+
+</odoo>
+
