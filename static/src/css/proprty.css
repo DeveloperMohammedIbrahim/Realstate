@@ -10,7 +10,38 @@
 .btn btn-secondary o_arrow_button o_first{
     background-color: #03efc1; /* اللون الأصلي */
     transition: background-color 0.5s ease-in-out; /* انتقال سلس لمدة 0.5 ثانية */
-}/*
+}
+.header_custom table thead tr {
+    background-color: #03efc1; /* اللون الأصلي */
+    transition: background-color 0.5s ease-in-out; /* انتقال سلس لمدة 0.5 ثانية */
+    text-align: center;
+}
+.o_home_menu .o_app .o_caption{
+    font-size: large;
+}
+.o_home_menu {
+    background-image: url('app_one/static/description/icon.png');
+    background-size: 210px auto;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+.o_home_menu_background:not(.o_home_menu_background_custom):not(.o_in_studio) .o_main_navbar{
+    background-color: #020202;
+}
+
+.header_custom table thead tr:hover {
+    background-color: #ff69b4; /* اللون الجديد عند وضع المؤشر */
+}
+.header_custom table thead tr  th:nth-child(2) {
+    width:250px  ; /* اللون الأصلي */
+    color: #ffffff;
+}
+
+.btn btn-secondary o_arrow_button o_first{
+    background-color: #03efc1; /* اللون الأصلي */
+    transition: background-color 0.5s ease-in-out; /* انتقال سلس لمدة 0.5 ثانية */
+}
+/*
 .o_field_statusbar > .o_statusbar_status > .o_arrow_button:not(.d-none):disabled:not(.o_arrow_button_current), .o_field_statusbar_duration > .o_statusbar_status > .o_arrow_button:not(.d-none):disabled:not(.o_arrow_button_current), .o_field_statusbar > .o_statusbar_status > .o_arrow_button:not(.d-none):disabled:not(.o_arrow_button_current):hover, .o_field_statusbar > .o_statusbar_status > .o_arrow_button:not(.d-none):disabled:not(.o_arrow_button_current):focus {
 color:#F9E400;
 background-color: #E2E2B6; /* اللون الجديد عند وضع المؤشر */
@@ -19,4 +50,4 @@ background-color: #E2E2B6; /* اللون الجديد عند وضع المؤشر
 .o_field_statusbar > .o_statusbar_status > .o_arrow_button:not(.d-none).o_arrow_button_current:disabled, .o_field_statusbar_duration > .o_statusbar_status > .o_arrow_button:not(.d-none).o_arrow_button_current:disabled, .o_field_statusbar > .o_statusbar_status > .o_arrow_button:not(.d-none):active:not(.o_first), .o_field_statusbar_duration > .o_statusbar_status > .o_arrow_button:not(.d-none):active:not(.o_first){
 background-color: #77E4C8; /* اللون الجديد عند وضع المؤشر */
 
-    }
+    /*}*/
