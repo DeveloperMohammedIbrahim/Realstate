@@ -8,7 +8,7 @@
     font-size: large;
 }
 .o_home_menu {
-    background-image: url('/property/static/src/img/مشهد1.jpg');
+    background-image: url('app_one/static/description/icon.png');
     background-size: 210px auto;
     background-position: right;
     background-repeat: no-repeat;
