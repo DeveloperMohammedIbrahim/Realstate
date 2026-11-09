@@ -116,14 +116,12 @@ class Property(models.Model):
             rec.diff_price = rec.expected_price - rec.selling_price
 
     # تغيير القيمة المتوقعة للأسعار
-    @api.model
     def write(self, vals):
         res = super(Property, self).write(vals)
         return res
 
     def unlink(self):
         res = super(Property, self).unlink()
-        print(" unlink " * 30)
         return res
     @api.model
     def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):

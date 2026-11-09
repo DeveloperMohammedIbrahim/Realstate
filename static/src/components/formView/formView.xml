@@ -2,13 +2,11 @@
 <templates xml:space="preserve">
 
     <t t-name="app_one.formView">
-        <div class="o_app_one_form">
-            <div class="o_app_one_form_card">
+        <Dialog title="title" size="'md'">
 
-                <header class="o_app_one_form_header">
-                    <h2 class="o_app_one_form_title">Property details</h2>
-                    <p class="o_app_one_form_subtitle">Fill in the information below to describe the property.</p>
-                </header>
+            <div class="o_app_one_form">
+
+                <div t-if="state.error" class="alert alert-danger py-2" role="alert" t-out="state.error"/>
 
                 <div class="o_app_one_form_grid">
 
@@ -49,14 +47,19 @@
                     </label>
 
                 </div>
-
-                <footer class="o_app_one_form_footer">
-                    <button type="button" class="btn btn-primary" t-on-click="createRecord">Save</button>
-                    <button type="button" class="btn btn-secondary" t-on-click="cancel">Cancel</button>
-                </footer>
-
             </div>
-        </div>
+
+            <t t-set-slot="footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        t-att-disabled="state.saving"
+                        t-on-click="save">
+                    <t t-out="state.saving ? 'Saving…' : (isEdit ? 'Save changes' : 'Create')"/>
+                </button>
+                <button type="button" class="btn btn-secondary" t-on-click="cancel">Cancel</button>
+            </t>
+
+        </Dialog>
     </t>
 
 </templates>

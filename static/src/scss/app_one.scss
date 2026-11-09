@@ -42,7 +42,7 @@ $app-one-primary:    #714b67; // Odoo purple: swap for $o-brand-primary if your 
         row-gap: 0.75rem;
     }
 
-    // لون العدّاد (كان inline style). !important لأن bg-primary نفسه !important
+    // لون العدّاد. !important لأن bg-primary نفسه !important
     .o_app_one_list_count {
         min-width: 1.75rem;
         background-color: #0082ff !important;
@@ -55,36 +55,6 @@ $app-one-primary:    #714b67; // Odoo purple: swap for $o-brand-primary if your 
 
     .o_app_one_search {
         width: 100%;
-    }
-
-    // الفورم جوه الليست: نلغي ستايل الصفحة الكاملة (height/padding/background)
-    .o_app_one_create_panel {
-        margin-bottom: 1.5rem;
-
-        .o_app_one_form {
-            height: auto;
-            overflow: visible;
-            padding: 0;
-            background: transparent;
-        }
-
-        .o_app_one_form_card {
-            max-width: 720px;
-            margin: 0;
-        }
-    }
-
-    .o_app_one_actions {
-        width: 1%;
-        white-space: nowrap;
-        text-align: end;
-    }
-
-    @media (max-width: 576px) {
-        .o_app_one_list_tools {
-            flex: 1 1 100%;
-            margin-left: 0 !important;
-        }
     }
 
     .o_app_one_card {
@@ -132,66 +102,39 @@ $app-one-primary:    #714b67; // Odoo purple: swap for $o-brand-primary if your 
         white-space: nowrap;
     }
 
+    .o_app_one_actions {
+        width: 1%;
+        white-space: nowrap;
+        text-align: end;
+    }
+
     .o_app_one_state {
         padding: 3rem 1rem;
         text-align: center;
         color: $app-one-text-muted;
     }
+
+    @media (max-width: 576px) {
+        .o_app_one_list_tools {
+            flex: 1 1 100%;
+            margin-left: 0 !important;
+        }
+    }
 }
 
 // ─────────────────────────────────────────────
-//  Form view
+//  Form (جوه الـ Dialog)
+//
+//  مهم: القواعد دي top-level وليست جوه .o_app_one_list.
+//  الـ Dialog بيتحط في .o_dialog_container خارج الليست، فأي selector
+//  مبدوء بـ .o_app_one_list مش هيوصل له.
+//  الهيدر والفوتر والخلفية والـ backdrop بتاعة الـ Dialog نفسه.
 // ─────────────────────────────────────────────
 .o_app_one_form {
-    height: 100%;
-    overflow: auto;
-    padding: 1.5rem;
-    background: $app-one-bg;
-
-    .o_app_one_form_card {
-        @include app-one-card;
-        max-width: 720px;
-        margin: 0 auto;
-    }
-
-    .o_app_one_form_header {
-        padding: 1.25rem 1.5rem;
-        background: $app-one-head-bg;
-        border-bottom: 1px solid $app-one-border;
-    }
-
-    .o_app_one_form_title {
-        margin: 0;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: $app-one-text;
-    }
-
-    .o_app_one_form_subtitle {
-        margin: 0.25rem 0 0;
-        font-size: 0.875rem;
-        color: $app-one-text-muted;
-    }
-
     .o_app_one_form_grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1.25rem 1.5rem;
-        padding: 1.5rem;
-    }
-
-    .o_app_one_form_footer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 1rem 1.5rem;
-        background: $app-one-head-bg;
-        border-top: 1px solid $app-one-border;
-
-        .btn {
-            min-width: 6rem;
-        }
     }
 
     .o_app_one_field {
@@ -255,8 +198,6 @@ $app-one-primary:    #714b67; // Odoo purple: swap for $o-brand-primary if your 
     }
 
     @media (max-width: 576px) {
-        padding: 1rem;
-
         .o_app_one_form_grid {
             grid-template-columns: 1fr;
         }

@@ -10,10 +10,10 @@ const POLL_INTERVAL = 3000; // بالملي ثانية
 
 export class ListViewActions extends Component {
     static template = "app_one.listView";
-    static components = {FormView}
 
     setup() {
         this.rpc = useService("rpc");
+        this.dialog = useService("dialog");
         this.state = useState({
             records: [],
             error: false,
@@ -22,6 +22,7 @@ export class ListViewActions extends Component {
 
         this.snapshot = "";      // آخر بيانات وصلت كنص، لنعرف هل تغير شيء فعلاً
         this.isFetching = false; // يمنع تداخل طلبين إن تأخر الرد أكثر من 3 ثوانٍ
+        this.reloadQueued = false; // طلب تحديث وصل أثناء طلب جاري (مثلاً بعد حفظ)
         this.timer = null;
 
         // أول تحميل يتم قبل رسم الشاشة: لا spinner ولا وميض لرسالة "No properties"
@@ -54,6 +55,8 @@ export class ListViewActions extends Component {
 
     async loadRecords() {
         if (this.isFetching) {
+            // لو سبنا الطلب ده يضيع، بعد الحفظ هتفضل القائمة قديمة لحد الـ poll الجاي
+            this.reloadQueued = true;
             return;
         }
         this.isFetching = true;
@@ -82,34 +85,39 @@ export class ListViewActions extends Component {
             }
         } finally {
             this.isFetching = false;
+            if (this.reloadQueued) {
+                this.reloadQueued = false;
+                this.loadRecords();
+            }
         }
-    }
-
-    async creatRecord() {
-        await this.rpc("/web/dataset/call_kw", {
-            model: "property",
-            method: "create",
-            args: [{
-                name: "creat po 3", postcode: "p0019", bedrooms: "6", description: "create record by js 4"
-            }],
-            kwargs: {},
-        });
-        this.loadRecords();
     }
 
     async deleteRecord(recordId) {
         await this.rpc("/web/dataset/call_kw", {
             model: "property",
             method: "unlink",
-            args: [recordId],
+            args: [[recordId]],
             kwargs: {},
         });
         this.loadRecords();
     }
 
-    toggleCreateForm() {
-        this.state.showCreateForm = !this.state.showCreateForm;
+    // ── الـ popup ───────────────────────────────────────────────
+    // نفس الـ FormView للإنشاء والتعديل. الفرق الوحيد: هل مرّرنا `record`؟
+    openForm(extraProps = {}) {
+        this.dialog.add(FormView, {
+            onSaved: () => this.loadRecords(),
+            ...extraProps,
+        });
+    }
 
+    openCreate() {
+        this.openForm();
+    }
+
+    openEdit(rec) {
+        // {...rec} نسخة: الـ rec الأصلي reactive وبيتبدّل مع كل polling
+        this.openForm({record: {...rec}});
     }
 }
 

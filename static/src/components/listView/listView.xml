@@ -10,9 +10,8 @@
                 <span class="o_app_one_list_count badge bg-primary" t-out="filteredRecords.length"/>
                 <button type="button"
                         class="btn btn-primary o_list_button_add"
-                        t-on-click="toggleCreateForm">
-                    <i class="fa me-1" t-att-class="state.showCreateForm ? 'fa-times' : 'fa-plus'"/>
-                    <t t-out="state.showCreateForm ? 'Close' : 'New'"/>
+                        t-on-click="openCreate">
+                    <i class="fa fa-plus me-1"/>New
                 </button>
 
                 <div class="o_app_one_list_tools ms-auto">
@@ -21,11 +20,6 @@
                            placeholder="Search name, postcode, description…"
                            t-model="state.search"/>
                 </div>
-            </div>
-
-            <!-- Create panel: خارج الـ header عشان ميزاحمش الـ search -->
-            <div t-if="state.showCreateForm" class="o_app_one_create_panel">
-                <FormView/>
             </div>
 
             <div class="o_app_one_card">
@@ -62,7 +56,12 @@
                             </td>
                             <td class="o_app_one_desc" t-att-title="rec.description" t-out="rec.description"/>
                             <td class="o_app_one_actions">
-                                <!-- bind(this, rec.id): الزرار يحذف السجل ده بس -->
+                                <!-- bind(this, rec): الدالة تستلم السجل ده بالذات -->
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-primary me-1"
+                                        t-on-click="openEdit.bind(this, rec)">
+                                    <i class="fa fa-pencil me-1"/>Edit
+                                </button>
                                 <button type="button"
                                         class="btn btn-sm btn-outline-danger"
                                         t-on-click="deleteRecord.bind(this, rec.id)">
