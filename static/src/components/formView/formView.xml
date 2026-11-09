@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="app_one.formView">
+        <div class="o_app_one_form">
+            <div class="o_app_one_form_card">
+
+                <header class="o_app_one_form_header">
+                    <h2 class="o_app_one_form_title">Property details</h2>
+                    <p class="o_app_one_form_subtitle">Fill in the information below to describe the property.</p>
+                </header>
+
+                <div class="o_app_one_form_grid">
+
+                    <label class="o_app_one_field o_app_one_field_full">
+                        <span class="o_app_one_label">Name</span>
+                        <input type="text"
+                               class="o_app_one_input"
+                               t-model="state.name"
+                               placeholder="Enter property name"
+                               autocomplete="off"/>
+                    </label>
+
+                    <label class="o_app_one_field">
+                        <span class="o_app_one_label">Postcode</span>
+                        <input type="text"
+                               class="o_app_one_input o_app_one_input_mono"
+                               t-model="state.postcode"
+                               placeholder="Enter property postcode"
+                               autocomplete="off"/>
+                    </label>
+
+                    <label class="o_app_one_field">
+                        <span class="o_app_one_label">Bedrooms</span>
+                        <input type="number"
+                               min="0"
+                               step="1"
+                               class="o_app_one_input"
+                               t-model.number="state.bedrooms"
+                               placeholder="Enter number of bedrooms"/>
+                    </label>
+
+                    <label class="o_app_one_field o_app_one_field_full">
+                        <span class="o_app_one_label">Description</span>
+                        <textarea rows="4"
+                                  class="o_app_one_input o_app_one_textarea"
+                                  t-model="state.description"
+                                  placeholder="Enter property description"/>
+                    </label>
+
+                </div>
+
+                <footer class="o_app_one_form_footer">
+                    <button type="button" class="btn btn-primary" t-on-click="createRecord">Save</button>
+                    <button type="button" class="btn btn-secondary" t-on-click="cancel">Cancel</button>
+                </footer>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

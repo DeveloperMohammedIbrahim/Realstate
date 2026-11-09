@@ -7,9 +7,9 @@ class Property(models.Model):
     _name = 'property'
     _description = 'Property'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    def P1(self):
-        print("property" * 1000)
-        pass
+    # def P1(self):
+    #     print("property" * 1000)
+    #     pass
     # تعريف الحقول
     name = fields.Char(string='Name', required=True, translate=True)
     ref = fields.Char(
@@ -263,22 +263,22 @@ class Country(models.Model):
 
 
 
-
-class Install(models.Model):
-    _inherit = 'ir.module.module'
-
-    def P(self):
-        print("p" * 1000)
-        pass
-
-    @api.model
-    def button_install(self):
-        print("button_immediate_install" * 100)
-
-        # استدعاء دالة P باستخدام self
-        self.P()
-        # self.env['property'].P1()
-
-        rnt = super(Install, self).button_install()
-
-        return rnt
+#
+# class Install(models.Model):
+#     _inherit = 'ir.module.module'
+#
+#     def P(self):
+#         print("p" * 1000)
+#         pass
+#
+#     @api.model
+#     def button_install(self):
+#         print("button_immediate_install" * 100)
+#
+#         # استدعاء دالة P باستخدام self
+#         self.P()
+#         # self.env['property'].P1()
+#
+#         rnt = super(Install, self).button_install()
+#
+#         return rnt

@@ -1,10 +1,11 @@
 {
     'name': 'App one',
-    'depends': ['base', 'account', 'sale_management', 'mail', 'contacts', 'report_xlsx', 'sale_stock'],
+    'depends': ['base', 'website', 'account', 'sale_management', 'mail', 'contacts', 'report_xlsx', 'sale_stock'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/sequences.xml',
+        'data/data.xml',
         'views/base_menu.xml',
         'views/property_views.xml',
         'views/owner_views.xml',
@@ -13,6 +14,7 @@
         # 'views/sale_order_views.xml',
         'views/res_partner_views.xml',
         'views/account_move_views.xml',
+        'views/emplates.xml',
         'views/building_views.xml',
         'views/property_history_views.xml',
         'wizard/change_state_wizard_views.xml',
@@ -31,17 +33,16 @@
         'views/birthday_views.xml',
     ],
     'assets': {
-        'web.report_assets_common': [
-            'app_one/static/src/css/font.css'
-        ],
         'web.assets_backend': [
-            'app_one/static/src/css/proprty.css'
-
-
+            'app_one/static/src/components/listView/listView.js',
+            'app_one/static/src/components/listView/listView.xml',
+            'app_one/static/src/components/listView/listView.css',
+            'app_one/static/src/components/formView/formView.js',
+            'app_one/static/src/components/formView/formView.css',
+            'app_one/static/src/components/formView/formView.xml',
+            "app_one/static/src/scss/app_one.scss"
         ],
-
     },
-
     'installable': True,
     'application': True,
     'license': 'LGPL-3',

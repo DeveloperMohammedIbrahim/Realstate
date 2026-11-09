@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="app_one.listView">
+        <div class="o_app_one_list">
+
+            <!-- Header: ثابت دائمًا (العنوان + العدّاد + New + Search) -->
+            <div class="o_app_one_list_header d-flex flex-wrap align-items-center gap-2 mb-3">
+                <h2 class="o_app_one_list_title mb-0">Properties</h2>
+                <span class="o_app_one_list_count badge bg-primary" t-out="filteredRecords.length"/>
+                <button type="button"
+                        class="btn btn-primary o_list_button_add"
+                        t-on-click="toggleCreateForm">
+                    <i class="fa me-1" t-att-class="state.showCreateForm ? 'fa-times' : 'fa-plus'"/>
+                    <t t-out="state.showCreateForm ? 'Close' : 'New'"/>
+                </button>
+
+                <div class="o_app_one_list_tools ms-auto">
+                    <input type="search"
+                           class="o_app_one_search form-control"
+                           placeholder="Search name, postcode, description…"
+                           t-model="state.search"/>
+                </div>
+            </div>
+
+            <!-- Create panel: خارج الـ header عشان ميزاحمش الـ search -->
+            <div t-if="state.showCreateForm" class="o_app_one_create_panel">
+                <FormView/>
+            </div>
+
+            <div class="o_app_one_card">
+
+                <!-- أول فرع يجب أن يكون t-if. t-elif لا يعمل بدون t-if قبله -->
+                <div t-if="state.error" class="o_app_one_state text-danger">
+                    <i class="fa fa-exclamation-triangle fa-2x"/>
+                    <p class="mt-2 mb-0">Could not load the records. Check the server log.</p>
+                </div>
+
+                <div t-elif="!filteredRecords.length" class="o_app_one_state">
+                    <i class="fa fa-inbox fa-2x"/>
+                    <p class="mt-2 mb-0">No properties found.</p>
+                </div>
+
+                <table t-else="" class="o_app_one_table table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Postcode</th>
+                            <th scope="col" class="text-end">Bedrooms</th>
+                            <th scope="col">Description</th>
+                            <th scope="col" class="o_app_one_actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="filteredRecords" t-as="rec" t-key="rec.id" class="o_app_one_row">
+                            <td class="o_app_one_id" t-out="rec.id"/>
+                            <td class="o_app_one_name fw-bold" t-out="rec.name"/>
+                            <td><span class="o_app_one_postcode" t-out="rec.postcode"/></td>
+                            <td class="text-end">
+                                <span class="badge bg-secondary" t-out="rec.bedrooms"/>
+                            </td>
+                            <td class="o_app_one_desc" t-att-title="rec.description" t-out="rec.description"/>
+                            <td class="o_app_one_actions">
+                                <!-- bind(this, rec.id): الزرار يحذف السجل ده بس -->
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        t-on-click="deleteRecord.bind(this, rec.id)">
+                                    <i class="fa fa-trash me-1"/>Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </t>
+
+</templates>

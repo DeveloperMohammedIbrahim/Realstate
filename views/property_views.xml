@@ -211,20 +211,20 @@
         <field name="view_mode">tree,form,kanban</field>
         <field name="view_id" ref="property_view_tree"/>
     </record>
-<!--    <record id="list_view_action" model="ir.actions.client">-->
-<!--        <field name="name">Properties List View</field>-->
-<!--        <field name="tag">property.action_list_view</field>-->
-<!--    </record>-->
+    <record id="list_view_action" model="ir.actions.client">
+        <field name="name">Properties List View</field>
+        <field name="tag">app_one.list_view_action</field>
+    </record>
 
 
     <!-- Menu Item -->
     <menuitem id="property_menu_item" name="Properties" parent="properties_menu" action="property_action"/>
-<!--    <menuitem-->
-<!--            id="property_list_view_menu_item"-->
-<!--            name="Properties OWL"-->
-<!--            parent="properties_menu"-->
-<!--            action="list_view_action"-->
-<!--    />-->
+    <menuitem
+            id="property_list_view_menu_item"
+            name="Properties OWL"
+            parent="properties_menu"
+            action="list_view_action"
+    />
     <!-- Server Actions -->
     <record id="property_closed_server_action" model="ir.actions.server">
         <field name="name">Closed</field>

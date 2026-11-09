@@ -22,5 +22,4 @@ access_related_person,access_related_person,model_related_person,,1,1,1,1
 access_gift,access_gift,model_gift,,1,1,1,1
 access_birthday,access_birthday,model_birthday,,1,1,1,1
 access_birthday,access_birthday,model_birthday,,1,1,1,1
-access_ir_module_module,access_ir_module_module,model_ir_module_module,,1,1,1,1
 access_res_partner_wizard,access_res_partner_wizard,model_res_partner_wizard,,1,1,1,1

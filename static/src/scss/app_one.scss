@@ -1,0 +1,264 @@
+// ─────────────────────────────────────────────
+//  Design tokens (shared by list + form)
+// ─────────────────────────────────────────────
+$app-one-bg:         #f8f9fa;
+$app-one-surface:    #fff;
+$app-one-border:     #dee2e6;
+$app-one-head-bg:    #f1f3f5;
+$app-one-text:       #212529;
+$app-one-text-head:  #495057;
+$app-one-text-muted: #6c757d;
+$app-one-text-faint: #868e96;
+$app-one-border-hover: #adb5bd;
+$app-one-radius:     0.5rem;
+$app-one-radius-sm:  0.25rem;
+$app-one-shadow:     0 1px 2px rgba(0, 0, 0, 0.05);
+$app-one-primary:    #714b67; // Odoo purple: swap for $o-brand-primary if your bundle exposes it
+
+@mixin app-one-card {
+    background: $app-one-surface;
+    border: 1px solid $app-one-border;
+    border-radius: $app-one-radius;
+    box-shadow: $app-one-shadow;
+    overflow: hidden;
+}
+
+// ─────────────────────────────────────────────
+//  List view
+// ─────────────────────────────────────────────
+.o_app_one_list {
+    height: 100%;
+    overflow: auto;
+    padding: 1.5rem;
+    background: $app-one-bg;
+
+    .o_app_one_list_title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $app-one-text;
+    }
+
+    .o_app_one_list_header {
+        row-gap: 0.75rem;
+    }
+
+    // لون العدّاد (كان inline style). !important لأن bg-primary نفسه !important
+    .o_app_one_list_count {
+        min-width: 1.75rem;
+        background-color: #0082ff !important;
+    }
+
+    .o_app_one_list_tools {
+        flex: 0 1 280px;
+        min-width: 0;
+    }
+
+    .o_app_one_search {
+        width: 100%;
+    }
+
+    // الفورم جوه الليست: نلغي ستايل الصفحة الكاملة (height/padding/background)
+    .o_app_one_create_panel {
+        margin-bottom: 1.5rem;
+
+        .o_app_one_form {
+            height: auto;
+            overflow: visible;
+            padding: 0;
+            background: transparent;
+        }
+
+        .o_app_one_form_card {
+            max-width: 720px;
+            margin: 0;
+        }
+    }
+
+    .o_app_one_actions {
+        width: 1%;
+        white-space: nowrap;
+        text-align: end;
+    }
+
+    @media (max-width: 576px) {
+        .o_app_one_list_tools {
+            flex: 1 1 100%;
+            margin-left: 0 !important;
+        }
+    }
+
+    .o_app_one_card {
+        @include app-one-card;
+    }
+
+    .o_app_one_table {
+        thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: $app-one-head-bg;
+            border-bottom: 1px solid $app-one-border;
+            color: $app-one-text-head;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            transition: background-color 0.15s ease;
+
+            &:hover {
+                background: rgba($app-one-primary, 0.04);
+            }
+        }
+    }
+
+    .o_app_one_id {
+        color: $app-one-text-faint;
+        width: 3.5rem;
+    }
+
+    .o_app_one_postcode {
+        font-family: monospace;
+        background: $app-one-head-bg;
+        border-radius: $app-one-radius-sm;
+        padding: 0.1rem 0.4rem;
+    }
+
+    .o_app_one_desc {
+        color: $app-one-text-muted;
+        max-width: 24rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .o_app_one_state {
+        padding: 3rem 1rem;
+        text-align: center;
+        color: $app-one-text-muted;
+    }
+}
+
+// ─────────────────────────────────────────────
+//  Form view
+// ─────────────────────────────────────────────
+.o_app_one_form {
+    height: 100%;
+    overflow: auto;
+    padding: 1.5rem;
+    background: $app-one-bg;
+
+    .o_app_one_form_card {
+        @include app-one-card;
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .o_app_one_form_header {
+        padding: 1.25rem 1.5rem;
+        background: $app-one-head-bg;
+        border-bottom: 1px solid $app-one-border;
+    }
+
+    .o_app_one_form_title {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $app-one-text;
+    }
+
+    .o_app_one_form_subtitle {
+        margin: 0.25rem 0 0;
+        font-size: 0.875rem;
+        color: $app-one-text-muted;
+    }
+
+    .o_app_one_form_grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .o_app_one_form_footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem;
+        background: $app-one-head-bg;
+        border-top: 1px solid $app-one-border;
+
+        .btn {
+            min-width: 6rem;
+        }
+    }
+
+    .o_app_one_field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.375rem;
+        margin: 0;
+        min-width: 0;
+    }
+
+    .o_app_one_field_full {
+        grid-column: 1 / -1;
+    }
+
+    .o_app_one_label {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: $app-one-text-head;
+    }
+
+    .o_app_one_input {
+        box-sizing: border-box;
+        width: 100%;
+        font-family: inherit;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9375rem;
+        color: $app-one-text;
+        background: $app-one-surface;
+        border: 1px solid $app-one-border;
+        border-radius: $app-one-radius-sm;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+        &::placeholder {
+            color: $app-one-text-faint;
+        }
+
+        &:hover {
+            border-color: $app-one-border-hover;
+        }
+
+        &:focus {
+            outline: 0;
+            border-color: $app-one-primary;
+            box-shadow: 0 0 0 0.2rem rgba($app-one-primary, 0.15);
+        }
+    }
+
+    .o_app_one_input_mono {
+        font-family: monospace;
+        letter-spacing: 0.03em;
+
+        &::placeholder {
+            font-family: var(--bs-body-font-family, system-ui, sans-serif);
+            letter-spacing: normal;
+        }
+    }
+
+    .o_app_one_textarea {
+        min-height: 6rem;
+        resize: vertical;
+    }
+
+    @media (max-width: 576px) {
+        padding: 1rem;
+
+        .o_app_one_form_grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}

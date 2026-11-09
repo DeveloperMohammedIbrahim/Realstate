@@ -6,6 +6,14 @@ from odoo import http
 from odoo.http import request
 
 
+
+class MyPublicPageController(http.Controller):
+
+    @http.route('/property/hello', type='http', auth='none', website=True)
+    def hello_page(self, **kwargs):
+        return request.render('app_one.hello_template', {
+            'message': 'مرحبًا بك في صفحة مخصصة في أودو',
+        })
 class PropertyApi(http.Controller):
 
     # ============================================================

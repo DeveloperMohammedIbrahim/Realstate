@@ -1,0 +1,16 @@
+<odoo>
+<template id="hello_template" name="Hello Page">
+    <html>
+        <head>
+            <title>Hello</title>
+        </head>
+
+        <body>
+            <div class="container">
+                <h1>
+                    <t t-esc="message"/>
+                </h1>
+            </div>
+        </body>
+    </html>
+</template></odoo>
